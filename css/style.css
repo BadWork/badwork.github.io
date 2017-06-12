@@ -1,0 +1,63 @@
+.container{
+	margin-top: 80px;
+}
+
+.main-addPayment{
+	margin-bottom: 20px;
+}
+
+.balance-header{
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+.main-lastPayments{
+	padding-top: 10px;
+	background-color: #E6E6E6;
+	border-radius: 6px;
+	border: 1px solid darkgrey;
+	margin-bottom: 20px;
+}
+
+.main-lastPayments .recent-date{
+	padding-left: 10px;
+	color: dimgray;
+}
+
+.main-lastPayments li{
+	background-color:rgba(253,165,165,0.6);
+	margin-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-radius: 4px;
+	vertical-align: middle;
+	padding-left: 10px;
+	padding-right: 10px;
+	transition: all ease-in 0.2s;
+}
+
+.main-lastPayments li:hover{
+	background-color:rgba(253,165,165,1);
+}
+
+.main-lastPayments-title{
+	font-size: 16px;
+	font-weight: bold;
+}
+
+li, ul{
+	list-style: none;
+	padding-left: 0;
+}
+
+.main-lastPayments li span{
+	padding-left: 3px;
+}
+.main-addPayment div{
+	padding-bottom: 10px;
+}
+
+
+.main-lastPayments-title{
+	margin-bottom: 10px;
+}
