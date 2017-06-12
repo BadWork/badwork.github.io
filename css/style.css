@@ -1,9 +1,19 @@
+body{
+	background-image: url(../img/bg.jpg);
+}
+
 .container{
 	margin-top: 80px;
+
 }
 
 .main-addPayment{
 	margin-bottom: 20px;
+	background-color: rgba(255,255,255,0.7);
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 6px;
+	border: 1px solid darkgrey;
 }
 
 .balance-header{
@@ -11,9 +21,9 @@
 	padding-left: 10px;
 }
 
-.main-lastPayments{
+.main-lastPayments, .chart-container{
 	padding-top: 10px;
-	background-color: #E6E6E6;
+	background-color: rgba(255,255,255,0.7);
 	border-radius: 6px;
 	border: 1px solid darkgrey;
 	margin-bottom: 20px;
@@ -60,4 +70,13 @@ li, ul{
 
 .main-lastPayments-title{
 	margin-bottom: 10px;
+}
+
+.chart-container{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	padding-left: 0px;
+	padding-right: 0px;
 }
