@@ -1,3 +1,7 @@
+document.addEventListener('gesturestart', function (e) {
+	e.preventDefault();
+});
+
 $('.btn-addPayment').on('click', function () {
 	financeMngr.addPayment();
 	financeMngr.showRecent();
