@@ -1,6 +1,6 @@
-document.addEventListener('touchmove', function(event) {
+document.addEventListener('touchmove', function (event) {
 	event = event.originalEvent || event;
-	if(event.scale > 1) {
+	if (event.scale > 1) {
 		event.preventDefault();
 	}
 }, false);
@@ -17,6 +17,8 @@ $(".input-addPayment-sum").on("change", function (e) {
 	$(e.target).val(temp);
 })
 
+/*Конструкторы*/
+
 function Payment() {
 	this.sum = 0;
 	this.category = {};
@@ -31,6 +33,16 @@ function Category(name) {
 	this.subCategories = [];
 	this.color = "";
 }
+
+function DataChart() {
+	this.sum = 0;
+	this.label = "";
+	this.color = "";
+}
+
+/*Конструкторы*/
+
+/*Функции*/
 
 function saveLocal() {
 	var tempObj = JSON.stringify(financeMngr.payments); //сериализуем его
@@ -53,9 +65,8 @@ function makeCategories() {
 	makeSubCategories("Еда", "Сладкое");
 	makeSubCategories("Еда", "Перекус");
 	makeSubCategories("Досуг", "Кино");
-	makeSubCategories("Досуг", "Сладкое");
-	makeSubCategories("Досуг", "Перекус");
-	console.log(financeMngr.categories);
+	makeSubCategories("Досуг", "Театр");
+	makeSubCategories("Досуг", "Аттракционы");
 }
 
 function makeSubCategories(category, subcategory) {
@@ -81,7 +92,10 @@ function showCategories() {
 	}
 }
 
-var financeMngr = {
+/*Функции*/
+
+
+var financeMngr = { //Ядро всего финансового менеджера
 	balance: 0,
 	payments: [],
 	categories: [],
@@ -98,28 +112,33 @@ var financeMngr = {
 		this.balance = count.toFixed(2);
 	},
 	addPayment: function () {
-			var payment = new Payment();
-			payment.sum = +($(".input-addPayment-sum").val());
-			payment.sum = payment.sum.toFixed(2);
-			payment.category = this.findCategory($(".selectpicker.input-addPayment-category").val());
+		var payment = new Payment();
+		payment.sum = +($(".input-addPayment-sum").val());
+		payment.sum = payment.sum.toFixed(2);
+		payment.category = this.findCategory($(".selectpicker.input-addPayment-category").val());
+		if ($('.input-dates .today').hasClass('active')) {
+			payment.date = new Date();
+		} else if ($('.input-dates .yesterday').hasClass('active')) {
+			payment.date = new Date();
+			payment.date.setDate(payment.date.getDate() - 1);
+		}
+		else{
 			payment.date = $('.date').datepicker('getDate');
-			payment.date.setSeconds(payment.date.getSeconds() + this.payments.length);
-			payment.sign = $('.btn-type').find('.active').find('input').val();
-			payment.description = $(".input-description").val();
-			this.payments.push(payment);
-			this.payments.sort(function (a, b) {
-				if (new Date(b.date).getTime() != new Date(a.date).getTime()) {
-					return new Date(b.date).getTime() - new Date(a.date).getTime()
-				}
-			});
-			this.countBalance();
-			console.log(chartStracture.data);
-	},
-	isError: function () {
-		
+		}
+		payment.date.setSeconds(payment.date.getSeconds() + this.payments.length);
+		payment.sign = $('.sign-block').find('.active').find('input').val();
+		payment.description = $(".input-description").val();
+		this.payments.push(payment);
+		this.payments.sort(function (a, b) {
+			if (new Date(b.date).getTime() != new Date(a.date).getTime()) {
+				return new Date(b.date).getTime() - new Date(a.date).getTime()
+			}
+		});
+		this.countBalance();
+		console.log(chartStracture.data);
 	},
 	showRecent: function () {
-		var recentAmount = 8;
+		var recentAmount = 6;
 		var recent = $('.lastPayments-list');
 		$('.lastPayments-list').text('');
 		if (this.payments.length < recentAmount) {
@@ -130,7 +149,7 @@ var financeMngr = {
 			recent.find('.sign').last().text(this.payments[i].sign);
 			recent.find('.sum').last().text(this.payments[i].sum);
 			recent.find('.currency').last().text(this.payments[i].currency);
-			recent.find('.recent-date').last().text('('+this.payments[i].date.toString().slice(0,10)+')');
+			recent.find('.recent-date').last().text('(' + this.payments[i].date.toString().slice(0, 10) + ')');
 			recent.find('.category').last().text(this.payments[i].category.name);
 		}
 		this.countBalance();
@@ -153,61 +172,102 @@ var financeMngr = {
 	}
 }
 
-var chartStracture = {
+var chartStracture = { //Всё, что касается графиков
 	data: [],
-	labels: [],
-	colors: [],
+	getData: function (number) {
+		var dataArray = [];
+		if (number > this.data.length) {
+			for (var i = 0; i < this.data.length; i++) {
+				dataArray.push(this.data[i].sum);
+			}
+		} else {
+			for (var i = 0; i < number; i++) {
+				dataArray.push(this.data[i].sum);
+			}
+		}
+		return dataArray;
+	},
+	getColors: function () {
+		var colorsArray = [];
+		for (var i = 0; i < this.data.length; i++) {
+			colorsArray.push(this.data[i].color);
+		}
+		return colorsArray;
+	},
+	getLabels: function (number) {
+		var labelsArray = [];
+		if (number > this.data.length) {
+			for (var i = 0; i < this.data.length; i++) {
+				labelsArray.push(this.data[i].label);
+			}
+		} else {
+			for (var i = 0; i < number; i++) {
+				labelsArray.push(this.data[i].label);
+			}
+		}
+		return labelsArray;
+	},
 	setData: function () {
+		var tempData = [];
 		this.data = [];
-		for (var i = 0; i < this.labels.length; i++) {
-			var label = this.labels[i];
-			this.data[i] = 0;
-			for (var j = 0; j < financeMngr.payments.length; j++) {
-				if (financeMngr.payments[j].category.name == this.labels[i] && financeMngr.payments[j].sign == '-') {
-					this.data[i] += +financeMngr.payments[j].sum
+		for (var i = 0; i < financeMngr.payments.length; i++) {
+			var dataObject = new DataChart();
+			if (financeMngr.payments[i].sign == '-') {
+				dataObject.sum = +financeMngr.payments[i].sum;
+				dataObject.sum.toFixed(2);
+				dataObject.label = financeMngr.payments[i].category.name;
+				dataObject.color = randomColor();
+				tempData.push(dataObject);
+			}
+		}
+		tempData.sort(function (a, b) {
+			var aLabel = a.label;
+			var bLabel = b.label;
+			return ((aLabel < bLabel) ? -1 : ((aLabel > bLabel) ? 1 : 0));
+		});
+		for (var i = 0; i < tempData.length; i++) {
+			for (var j = i + 1; j < tempData.length; j++) {
+				if (tempData[i].label == tempData[j].label) {
+					tempData[i].sum += +tempData[j].sum;
+					tempData[j].label = "";
+					tempData[j].sum = 0;
 				}
 			}
-		}
-	},
-	setLabel: function () {
-		this.labels = [];
-		for (var i = 0; i < financeMngr.payments.length; i++) {
-			if (financeMngr.payments[i].sign == '-') {
-				this.labels.push(financeMngr.payments[i].category.name)
+			if (tempData[i].label != "") {
+				this.data.push(tempData[i]);
 			}
 		}
-		this.labels = jQuery.unique(this.labels);
 	},
-	setColor: function () {
-		this.colors = [];
-		for (var i = 0; i < financeMngr.payments.length; i++) {
-			this.colors.push(randomColor())
-		}
-	},
-	groupData: function () {
-
+	sortData: function () {
+		this.data.sort(function (a, b) {
+			var aSum = a.sum;
+			var bSum = b.sum;
+			return ((aSum > bSum) ? -1 : ((aSum < bSum) ? 1 : 0));
+		});
 	},
 	makeChart: function (period) {
 		if (period == 'all') {
-			this.setLabel();
 			this.setData();
-			this.setColor();
+			this.sortData();
 		}
 	},
 	init: function () {
-		$('.chart-container').text("");
-		$('.chart-container').append('<canvas id="chart"></canvas>');
+		$('.chart-container-1').text("");
+		$('.chart-container-1').append('<canvas id="chart"></canvas>');
+		$('.chart-container-2').text("");
+		$('.chart-container-2').append('<canvas id="chart2"></canvas>');
 		this.makeChart('all');
 		var ctx = document.getElementById('chart').getContext('2d');
+		var cty = document.getElementById('chart2').getContext('2d');
 		var myPieChart = new Chart(ctx, {
 			type: 'doughnut',
 			data: {
 				datasets: [{
-					data: chartStracture.data,
-					backgroundColor: chartStracture.colors,
-					borderColor: chartStracture.colors,
+					data: chartStracture.getData(5),
+					backgroundColor: chartStracture.getColors(),
+					borderColor: chartStracture.getColors(),
 				}],
-				labels: chartStracture.labels
+				labels: chartStracture.getLabels(5)
 			},
 			options: {
 				maintainAspectRatio: false,
@@ -218,11 +278,33 @@ var chartStracture = {
 				}
 			}
 		})
+		var myHorizontalChart = new Chart(cty, {
+			type: 'horizontalBar',
+			data: {
+				datasets: [{
+					data: chartStracture.getData(7),
+					backgroundColor: chartStracture.getColors(),
+					borderColor: chartStracture.getColors(),
+				}],
+				labels: chartStracture.getLabels(7)
+			},
+			options: {
+				maintainAspectRatio: false,
+				responsive: true,
+				legend: {
+					display: false
+				},
+				scales: {
+					xAxes: [{
+						gridLines: {
+							offsetGridLines: false
+						}
+					}]
+				}				
+			}
+		})
 	}
 }
-
-
-
 
 makeCategories();
 showCategories();

@@ -51,43 +51,32 @@
 	</header>
 	<div class="container">
 		<div class="row">
-			<div class="main-addPayment col-lg-6 col-sm-6 col-xs-12">
+			<div class="main-addPayment col-lg-6 col-sm-6 col-xs-12 center-block">
 				<div class="input-group">
 					<input type="text" class="input-addPayment-sum form-control" placeholder="Сумма">
 					<span class="input-group-addon">BYN</span>
 				</div>
 				<select class="selectpicker input-addPayment-category" data-width="100%" data-live-search="true" data-size="5" title="Выберите категорию:">
-					<option>Mustard</option>
-					<optgroup label="Picnic">
-						<option>Mustard</option>
-						<option>Ketchup</option>
-						<option>Relish</option>
-					</optgroup>
-					<optgroup label="Camping">
-						<option>Tent</option>
-						<option>Flashlight</option>
-						<option>Toilet Paper</option>
-					</optgroup>
 				</select>
 
-				<div class="input-addPayment-date input-group date" data-provide="datepicker" data-date-end-date="0d">
-					<input type="text" class="form-control" placeholder="Дата">
-					<div class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</div>
+				<div class="input-dates btn-type btn-group btn-group-justified" data-toggle="buttons">
+					<label class="btn btn-default yesterday">
+						<input class="" type="radio" name="quality[25]" value="-" /> Вчера
+					</label>
+					<label class="btn btn-default today active">
+						<input type="radio" name="quality[25]" value="+" /> Сегодня
+					</label>
+					<label class="btn btn-default other date" data-provide="datepicker" data-date-end-date="0d">
+						<input type="radio" name="quality[25]"/><span class="glyphicon glyphicon-calendar"></span> Другое
+					</label>
 				</div>
-				<div class="btn-type btn-group btn-group-justified" data-toggle="buttons">
+				<div class="sign-block btn-type btn-group btn-group-justified" data-toggle="buttons">
 					<label class="btn btn-default active">
 						<input class="" type="radio" name="quality[25]" value="-" /> Расход
 					</label>
 					<label class="btn btn-default">
 						<input type="radio" name="quality[25]" value="+" /> Доход
 					</label>
-
-				</div>
-				<div class="form-group">
-					<label for="comment">Комментарий:</label>
-					<textarea class="input-description form-control" rows="3" id="comment"></textarea>
 				</div>
 				<button type="button" class="btn btn-addPayment btn-danger center-block">Добавить</button>
 			</div>
@@ -99,9 +88,16 @@
 			</div>
 		</div>
 
-		<div class="chart-container col-xs-12">
-			<canvas id="chart"></canvas>
-		</div>
+<div class="row">
+	<div class="chart-container-1 col-xs-12 col-sm-6">
+		<canvas id="chart"></canvas>
+	</div>
+	<div class="chart-container-2 col-xs-12 col-sm-5 pull-right">
+		<canvas id="chart2"></canvas>
+	</div>
+</div>
+
+
 
 
 	</div>

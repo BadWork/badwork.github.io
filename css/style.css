@@ -4,7 +4,8 @@ body{
 
 .container{
 	margin-top: 80px;
-
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .main-addPayment{
@@ -21,7 +22,7 @@ body{
 	padding-left: 10px;
 }
 
-.main-lastPayments, .chart-container{
+.main-lastPayments, .chart-container-1, .chart-container-2{
 	padding-top: 10px;
 	background-color: rgba(255,255,255,0.7);
 	border-radius: 6px;
@@ -33,6 +34,8 @@ body{
 	padding-left: 10px;
 	color: dimgray;
 }
+
+
 
 .main-lastPayments li{
 	background-color:rgba(253,165,165,0.6);
@@ -60,23 +63,32 @@ li, ul{
 	padding-left: 0;
 }
 
+li .recent-date{
+	font-size: 10px;
+}
+
 .main-lastPayments li span{
 	padding-left: 3px;
 }
+
 .main-addPayment div{
 	padding-bottom: 10px;
 }
-
 
 .main-lastPayments-title{
 	margin-bottom: 10px;
 }
 
-.chart-container{
+.chart-container-1, .chart-container-2{
 	margin-top: 10px;
 	margin-bottom: 20px;
 	padding-top: 30px;
 	padding-bottom: 30px;
-	padding-left: 0px;
-	padding-right: 0px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.chart-container-1, .chart-container-2{
+	min-height: 362px;
+	max-height: 400px;
 }
