@@ -4,9 +4,6 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="cleartype" content="on">
-	<meta name="MobileOptimized" content="320">
-	<meta name="HandheldFriendly" content="True">
-	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 	<title>Финансовый менеджер</title>
@@ -26,85 +23,84 @@
 </head>
 
 <body>
-	<header>
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				 <span class="sr-only">Toggle navigation</span>
-				 <span class="icon-bar"></span>
-				 <span class="icon-bar"></span>
-				 <span class="icon-bar"></span>
-			 </button>
-					<div class="balance-header">
-						<a class="navbar-brand" href="#">Баланс:</a>
-						<span class="navbar-brand balance"></span>
+	<div class="options-section" id="menu">
+		<h1>Здесь будут настройки</h1>
+	</div>
+	<div id="panel">
+		<header>
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed toggle-button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<div class="balance-header">
+							<a class="navbar-brand" href="#">Баланс:</a>
+							<span class="navbar-brand balance"></span>
+						</div>
+					</div>
+
+					<div class="collapse navbar-collapse navbar-right hidden-xs" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li><a class="toggle-button" href="#settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+								Настройки</a></li>
+						</ul>
 					</div>
 				</div>
+			</nav>
 
-				<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li><a class="toggle-button" href="#settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-					 Настройки</a></li>
+		</header>
+		<div class="container">
+			<div class="row">
+				<div class="main-addPayment col-lg-6 col-sm-6 col-xs-12 center-block">
+					<div class="input-group">
+						<input type="text" class="input-addPayment-sum form-control" placeholder="Сумма">
+						<span class="input-group-addon">BYN</span>
+					</div>
+					<select class="selectpicker input-addPayment-category" data-width="100%" data-live-search="true" data-size="5" title="Выберите категорию:">
+					</select>
+					<div class="input-dates btn-type btn-group btn-group-justified" data-toggle="buttons">
+						<label class="btn btn-default yesterday">
+							<input class="" type="radio" name="quality[25]" value="-" /> Вчера
+						</label>
+						<label class="btn btn-default today active">
+							<input type="radio" name="quality[25]" value="+" /> Сегодня
+						</label>
+						<label class="btn btn-default other date" data-provide="datepicker" data-date-end-date="0d">
+							<input class="input-other-date" type="radio" name="quality[25]"/><span class="glyphicon glyphicon-calendar"></span> <span class="other-date">Другое</span>
+						</label>
+					</div>
+					<div class="sign-block btn-type btn-group btn-group-justified" data-toggle="buttons">
+						<label class="btn btn-default active">
+							<input class="" type="radio" name="quality[25]" value="-" /> Расход
+						</label>
+						<label class="btn btn-default">
+							<input type="radio" name="quality[25]" value="+" /> Доход
+						</label>
+					</div>
+					<button type="button" class="btn btn-addPayment btn-danger center-block">Добавить</button>
+				</div>
+				<div class="main-lastPayments pull-right col-lg-5 col-sm-5 col-xs-12">
+					<div class="main-lastPayments-title"><span>Последние расходы</span></div>
+					<ul class="lastPayments-list">
 					</ul>
 				</div>
 			</div>
-		</nav>
-		<div id="menu"></div>
-	</header>
-	<div class="container" id="panel">
 			<div class="row">
-			<div class="main-addPayment col-lg-6 col-sm-6 col-xs-12 center-block">
-				<div class="input-group">
-					<input type="text" class="input-addPayment-sum form-control" placeholder="Сумма">
-					<span class="input-group-addon">BYN</span>
+				<div class="chart-container-1 col-xs-12 col-sm-6">
+					<canvas id="chart"></canvas>
 				</div>
-				<select class="selectpicker input-addPayment-category" data-width="100%" data-live-search="true" data-size="5" title="Выберите категорию:">
-				</select>
-
-				<div class="input-dates btn-type btn-group btn-group-justified" data-toggle="buttons">
-					<label class="btn btn-default yesterday">
-						<input class="" type="radio" name="quality[25]" value="-" /> Вчера
-					</label>
-					<label class="btn btn-default today active">
-						<input type="radio" name="quality[25]" value="+" /> Сегодня
-					</label>
-					<label class="btn btn-default other date" data-provide="datepicker" data-date-end-date="0d">
-						<input class="input-other-date" type="radio" name="quality[25]"/><span class="glyphicon glyphicon-calendar"></span> <span class="other-date">Другое</span>
-					</label>
+				<div class="chart-container-2 col-xs-12 col-sm-5 pull-right">
+					<canvas id="chart2"></canvas>
 				</div>
-				<div class="sign-block btn-type btn-group btn-group-justified" data-toggle="buttons">
-					<label class="btn btn-default active">
-						<input class="" type="radio" name="quality[25]" value="-" /> Расход
-					</label>
-					<label class="btn btn-default">
-						<input type="radio" name="quality[25]" value="+" /> Доход
-					</label>
-				</div>
-				<button type="button" class="btn btn-addPayment btn-danger center-block">Добавить</button>
-			</div>
-
-			<div class="main-lastPayments pull-right col-lg-5 col-sm-5 col-xs-12">
-				<div class="main-lastPayments-title"><span>Последние расходы</span></div>
-				<ul class="lastPayments-list">
-				</ul>
 			</div>
 		</div>
-
-<div class="row">
-	<div class="chart-container-1 col-xs-12 col-sm-6">
-		<canvas id="chart"></canvas>
 	</div>
-	<div class="chart-container-2 col-xs-12 col-sm-5 pull-right">
-		<canvas id="chart2"></canvas>
-	</div>
-</div>
-
-
-
-
-	</div>
+	
 
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
@@ -114,21 +110,22 @@
 	<script src="lib/calendar/locales/bootstrap-datepicker.ru.min.js"></script>
 	<script src="lib/bootstrap-select-1.12.2/js/bootstrap-select.min.js"></script>
 	<script src="lib/bootstrap-select-1.12.2/js/i18n/defaults-ru_RU.min.js"></script>
-	<script src="lib/slideout.js/slideout.js"></script>
-	<script src="js/script.js"></script>
+	<script src="lib/slideout.js/slideout.min.js"></script>
 	<script>
 		var slideout = new Slideout({
 			'panel': document.getElementById('panel'),
 			'menu': document.getElementById('menu'),
-			'padding': 256,
+			'padding': 280,
 			'tolerance': 70,
-			'side': 'right' 
+			'side': 'right'
 		});
 		// Toggle button
-		document.querySelector('.toggle-button').addEventListener('click', function() {
+		$('.toggle-button').on('click', function() {
 			slideout.toggle();
 		});
 	</script>
+	<script src="js/script.js"></script>
+
 </body>
 
 </html>
