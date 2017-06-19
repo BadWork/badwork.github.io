@@ -11,6 +11,12 @@ $('.btn-addPayment').on('click', function () {
 	saveLocal();
 })
 
+$('.clear_all').on('click', function(){
+	localStorage.clear();
+	financeMngr.payments = [];
+	financeMngr.showRecent();
+})
+
 $(".input-addPayment-sum").on("change", function (e) {
 	var temp = +($(e.target).val());
 	temp = temp.toFixed(2);

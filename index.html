@@ -24,7 +24,11 @@
 
 <body>
 	<div class="options-section" id="menu">
-		<h1>Здесь будут настройки</h1>
+		<h1>Настройки</h1>
+		<ul class="nav navbar-nav">
+			<li><a class="clear_all" href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				Очистить хранилище</a></li>
+		</ul>
 	</div>
 	<div id="panel">
 		<header>
@@ -117,12 +121,16 @@
 			'menu': document.getElementById('menu'),
 			'padding': 280,
 			'tolerance': 70,
-			'side': 'right'
+			'side': 'right',
+			'easing': 'cubic-bezier(.32,2,.55,.27)'
 		});
 		// Toggle button
 		$('.toggle-button').on('click', function() {
 			slideout.toggle();
 		});
+		$('#panel').on('click', function(){
+			if (slideout.isOpen()) {slideout.close()}
+					})
 	</script>
 	<script src="js/script.js"></script>
 
