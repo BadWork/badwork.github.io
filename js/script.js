@@ -17,6 +17,10 @@ $(".input-addPayment-sum").on("change", function (e) {
 	$(e.target).val(temp);
 })
 
+$(".input-other-date").on("change", function (e) {
+	$(".other.date").children(".other-date").text($('.date').datepicker('getDate', Date()).ddmmyyyy());
+})
+
 /*Конструкторы*/
 
 function Payment() {
@@ -38,6 +42,19 @@ function DataChart() {
 	this.sum = 0;
 	this.label = "";
 	this.color = "";
+}
+
+Date.prototype.ddmmyyyy = function(){
+	var tempDate = "";
+	tempDate += this.getDate()+".";
+	if (this.getMonth()<9){
+		tempDate += "0"+(this.getMonth()+1)+".";
+	}
+	else{
+		tempDate += (this.getMonth()+1)+".";
+	}
+	tempDate += this.getFullYear();
+	return tempDate;
 }
 
 /*Конструкторы*/
@@ -97,6 +114,7 @@ function showCategories() {
 
 var financeMngr = { //Ядро всего финансового менеджера
 	balance: 0,
+	idCounter: 0,
 	payments: [],
 	categories: [],
 	dates: [],
@@ -118,14 +136,17 @@ var financeMngr = { //Ядро всего финансового менедже�
 		payment.category = this.findCategory($(".selectpicker.input-addPayment-category").val());
 		if ($('.input-dates .today').hasClass('active')) {
 			payment.date = new Date();
+			payment.date.setHours(0,0,0);
 		} else if ($('.input-dates .yesterday').hasClass('active')) {
 			payment.date = new Date();
 			payment.date.setDate(payment.date.getDate() - 1);
+			payment.date.setHours(0,0,0);
 		}
 		else{
-			payment.date = $('.date').datepicker('getDate');
+			payment.date = $('.date').datepicker('getDate', Date());
 		}
-		payment.date.setSeconds(payment.date.getSeconds() + this.payments.length);
+		payment.date.setSeconds(payment.date.getSeconds() + this.idCounter);
+		this.idCounter += 1;
 		payment.sign = $('.sign-block').find('.active').find('input').val();
 		payment.description = $(".input-description").val();
 		this.payments.push(payment);
@@ -135,7 +156,7 @@ var financeMngr = { //Ядро всего финансового менедже�
 			}
 		});
 		this.countBalance();
-		console.log(chartStracture.data);
+		console.log(payment);
 	},
 	showRecent: function () {
 		var recentAmount = 6;
@@ -149,7 +170,8 @@ var financeMngr = { //Ядро всего финансового менедже�
 			recent.find('.sign').last().text(this.payments[i].sign);
 			recent.find('.sum').last().text(this.payments[i].sum);
 			recent.find('.currency').last().text(this.payments[i].currency);
-			recent.find('.recent-date').last().text('(' + this.payments[i].date.toString().slice(0, 10) + ')');
+			console.log(this.payments[i]);
+			recent.find('.recent-date').last().text(this.payments[i].date.ddmmyyyy());
 			recent.find('.category').last().text(this.payments[i].category.name);
 		}
 		this.countBalance();
@@ -297,7 +319,23 @@ var chartStracture = { //Всё, что касается графиков
 				scales: {
 					xAxes: [{
 						gridLines: {
-							offsetGridLines: false
+							display: false,
+							drawBorder: false,
+						},
+						ticks: {
+							beginAtZero:true,
+							display: false
+						}
+					}],
+					yAxes: [{
+						maxBarThickness: 30,
+						barThickness: 20,
+						ticks: {
+							beginAtZero:true
+						},
+						gridLines: {
+							display: false,
+							drawBorder: false
 						}
 					}]
 				}				

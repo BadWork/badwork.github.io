@@ -3,8 +3,11 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="cleartype" content="on">
+	<meta name="MobileOptimized" content="320">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 	<title>Финансовый менеджер</title>
 
@@ -42,15 +45,16 @@
 
 				<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						<li><a class="toggle-button" href="#settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 					 Настройки</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
+		<div id="menu"></div>
 	</header>
-	<div class="container">
-		<div class="row">
+	<div class="container" id="panel">
+			<div class="row">
 			<div class="main-addPayment col-lg-6 col-sm-6 col-xs-12 center-block">
 				<div class="input-group">
 					<input type="text" class="input-addPayment-sum form-control" placeholder="Сумма">
@@ -67,7 +71,7 @@
 						<input type="radio" name="quality[25]" value="+" /> Сегодня
 					</label>
 					<label class="btn btn-default other date" data-provide="datepicker" data-date-end-date="0d">
-						<input type="radio" name="quality[25]"/><span class="glyphicon glyphicon-calendar"></span> Другое
+						<input class="input-other-date" type="radio" name="quality[25]"/><span class="glyphicon glyphicon-calendar"></span> <span class="other-date">Другое</span>
 					</label>
 				</div>
 				<div class="sign-block btn-type btn-group btn-group-justified" data-toggle="buttons">
@@ -110,10 +114,20 @@
 	<script src="lib/calendar/locales/bootstrap-datepicker.ru.min.js"></script>
 	<script src="lib/bootstrap-select-1.12.2/js/bootstrap-select.min.js"></script>
 	<script src="lib/bootstrap-select-1.12.2/js/i18n/defaults-ru_RU.min.js"></script>
+	<script src="lib/slideout.js/slideout.js"></script>
 	<script src="js/script.js"></script>
-	<script type="text/javascript">
-
-
+	<script>
+		var slideout = new Slideout({
+			'panel': document.getElementById('panel'),
+			'menu': document.getElementById('menu'),
+			'padding': 256,
+			'tolerance': 70,
+			'side': 'right' 
+		});
+		// Toggle button
+		document.querySelector('.toggle-button').addEventListener('click', function() {
+			slideout.toggle();
+		});
 	</script>
 </body>
 
