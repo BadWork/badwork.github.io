@@ -1,6 +1,14 @@
 #panel{
 	background-image: url(../img/bg.jpg);
 }
+#sidebar{
+	background-color: #333;
+	padding-left: 20px;
+}
+
+#sidebar h1{
+	color: #ced5d6;
+}
 
 .container{
 	padding-left: 20px;
@@ -42,7 +50,12 @@
 	color: dimgray;
 }
 
-
+a.all-payments{
+	font-size: 14px;
+	font-weight: normal;
+	cursor: pointer;
+}
+ 
 .main-lastPayments li{
 	background-color:rgba(253,165,165,0.6);
 	margin-bottom: 5px;
@@ -108,7 +121,7 @@ body {
 	position: fixed;
 	top: 0;
 	bottom: 0;
-	width: 256px;
+	width: 280px;
 	min-height: 100vh;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;

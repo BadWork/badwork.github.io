@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="lib/calendar/css/bootstrap-datepicker3.standalone.css">
 	<link rel="stylesheet" href="lib/bootstrap-select-1.12.2/css/bootstrap-select.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -23,7 +24,9 @@
 </head>
 
 <body>
-	<div class="options-section" id="menu">
+	<!-- HTML-код модального окна -->
+	<div id="myModal" class="modal fade"></div>
+	<div class="options-section" id="sidebar">
 		<h1>Настройки</h1>
 		<ul class="nav navbar-nav">
 			<li><a class="clear_all" href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -36,7 +39,7 @@
 				<div class="container-fluid">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed toggle-button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<button type="button" class="navbar-toggle collapsed toggle-button" data-toggle="collapse">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
@@ -48,7 +51,7 @@
 						</div>
 					</div>
 
-					<div class="collapse navbar-collapse navbar-right hidden-xs" id="bs-example-navbar-collapse-1">
+					<div class="collapse navbar-collapse navbar-right hidden-xs">
 						<ul class="nav navbar-nav">
 							<li><a class="toggle-button" href="#settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 								Настройки</a></li>
@@ -61,11 +64,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="main-addPayment col-lg-6 col-sm-6 col-xs-12 center-block">
-					<div class="input-group">
+					<div class="input-group input-group-addPayment">
 						<input type="text" class="input-addPayment-sum form-control" placeholder="Сумма">
 						<span class="input-group-addon">BYN</span>
 					</div>
-					<select class="selectpicker input-addPayment-category" data-width="100%" data-live-search="true" data-size="5" title="Выберите категорию:">
+					<select class="selectpicker input-addPayment-category" data-width="100%" data-live-search="true" data-size="6">
 					</select>
 					<div class="input-dates btn-type btn-group btn-group-justified" data-toggle="buttons">
 						<label class="btn btn-default yesterday">
@@ -89,7 +92,7 @@
 					<button type="button" class="btn btn-addPayment btn-danger center-block">Добавить</button>
 				</div>
 				<div class="main-lastPayments pull-right col-lg-5 col-sm-5 col-xs-12">
-					<div class="main-lastPayments-title"><span>Последние расходы</span></div>
+					<div class="main-lastPayments-title"><span>Последние расходы</span><a class="pull-right all-payments" href="#myModal" data-toggle="modal">Все</a></div>
 					<ul class="lastPayments-list">
 					</ul>
 				</div>
@@ -103,8 +106,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- Кнопка, вызывающее модальное окно -->
+		
 	</div>
-	
+
 
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
@@ -118,7 +123,7 @@
 	<script>
 		var slideout = new Slideout({
 			'panel': document.getElementById('panel'),
-			'menu': document.getElementById('menu'),
+			'menu': document.getElementById('sidebar'),
 			'padding': 280,
 			'tolerance': 70,
 			'side': 'right',
@@ -128,6 +133,7 @@
 		$('.toggle-button').on('click', function() {
 			slideout.toggle();
 		});
+
 	</script>
 	<script src="js/script.js"></script>
 
